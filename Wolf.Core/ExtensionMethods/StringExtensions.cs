@@ -88,5 +88,9 @@ namespace Wolf.Core.ExtensionMethods
             removedValues.ToList().ForEach(x => source = source.Replace(x, ""));
             return source;
         }
+        public static bool ContainsAny(this string input, IEnumerable<string> containsKeywords, StringComparison comparisonType)
+        {
+            return containsKeywords.Any(keyword => input.IndexOf(keyword, comparisonType) >= 0);
+        }
     }
 }

@@ -17,10 +17,10 @@ namespace Wolf.API.Controllers
     {
         private readonly IServiceWrapper _service;
         private readonly ILogger<Sys_CategoryController> _logger;
-        public Sys_ConfigController(IServiceWrapper repository, ILogger<Sys_CategoryController> logger) :base(repository, logger)
+        public Sys_ConfigController(IServiceWrapper service, ILogger<Sys_CategoryController> logger) :base(service, logger)
         {
             _logger = logger;
-            _service = repository;
+            _service = service;
         }
         [HttpGet("{page}/{pageSize}/{totalLimitItems}/{type}")]
         [AuthorizeFilter]

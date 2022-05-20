@@ -66,8 +66,13 @@ namespace Wolf.API.Service.Sys_Organization
             if(user != null)
             {
                 throw new Exception(Sys_Const.Message.SERVICE_ORGAN_EXIST_USER);
-            }    
-            _dbContext.Sys_Organizations.Remove(new Model.Sys_Organization() { Id = Id });
+            }
+            var organ = await _dbContext.Sys_Organizations.FirstOrDefaultAsync(o => o.Id == Id);
+            if (organ == null)
+            {
+                throw new Exception(Sys_Const.Message.SERVICE_ORGAN_UNEXISTED);
+            }
+            _dbContext.Sys_Organizations.Remove(organ);
             await UnitOfWork.SaveAsync();
         }
     }

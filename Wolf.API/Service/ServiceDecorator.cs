@@ -11,40 +11,40 @@ namespace Wolf.API.Service
     class ServiceDecorator<TEntity>
     {
         private IRepositoryBase<TEntity> _serviceBase;
-        public ServiceDecorator(IServiceWrapper repository)
+        public ServiceDecorator(IServiceWrapper service)
         {
-            #region add repository
+            #region add service
             if (typeof(TEntity) == typeof(Model.Sys_Category))
             {
-                _serviceBase = (IRepositoryBase<TEntity>)repository.Sys_Category;
+                _serviceBase = (IRepositoryBase<TEntity>)service.Sys_Category;
             }
             else if(typeof(TEntity) == typeof(Model.Sys_User))
             {
-                _serviceBase = (IRepositoryBase<TEntity>)repository.Sys_User;
+                _serviceBase = (IRepositoryBase<TEntity>)service.Sys_User;
             }
             else if (typeof(TEntity) == typeof(Model.Sys_File))
             {
-                _serviceBase = (IRepositoryBase<TEntity>)repository.Sys_File;
+                _serviceBase = (IRepositoryBase<TEntity>)service.Sys_File;
             }
             else if (typeof(TEntity) == typeof(Model.Sys_Organization))
             {
-                _serviceBase = (IRepositoryBase<TEntity>)repository.Sys_Organization;
+                _serviceBase = (IRepositoryBase<TEntity>)service.Sys_Organization;
             }
             else if (typeof(TEntity) == typeof(Model.Sys_Role))
             {
-                _serviceBase = (IRepositoryBase<TEntity>)repository.Sys_Role;
+                _serviceBase = (IRepositoryBase<TEntity>)service.Sys_Role;
             }
             else if (typeof(TEntity) == typeof(Model.Sys_Config))
             {
-                _serviceBase = (IRepositoryBase<TEntity>)repository.Sys_Config;
+                _serviceBase = (IRepositoryBase<TEntity>)service.Sys_Config;
             }
             else if (typeof(TEntity) == typeof(Model.Sys_Permission))
             {
-                _serviceBase = (IRepositoryBase<TEntity>)repository.Sys_Permission;
+                _serviceBase = (IRepositoryBase<TEntity>)service.Sys_Permission;
             }
             else if (typeof(TEntity) == typeof(Model.Sys_Resource))
             {
-                _serviceBase = (IRepositoryBase<TEntity>)repository.Sys_Resource;
+                _serviceBase = (IRepositoryBase<TEntity>)service.Sys_Resource;
             }
             #endregion
         }

@@ -17,9 +17,9 @@ namespace Wolf.API.Controllers
     {
         private readonly IServiceWrapper _service;
         private readonly ILogger<Sys_RoleController> _logger;
-        public Sys_RoleController(IServiceWrapper repository, ILogger<Sys_RoleController> logger) :base(repository, logger)
+        public Sys_RoleController(IServiceWrapper service, ILogger<Sys_RoleController> logger) :base(service, logger)
         {
-            _service = repository;
+            _service = service;
             _logger = logger;
         }
         [HttpGet("CheckDupicateAttributes")]

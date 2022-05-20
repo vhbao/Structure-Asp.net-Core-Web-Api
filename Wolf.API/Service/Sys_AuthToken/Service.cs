@@ -37,7 +37,8 @@ namespace Wolf.API.Service.Sys_AuthToken
                 token.LoginName = loginName;
                 token.UpdatedBy = loginName;
                 token.UpdatedDateTime = _dateTimeProvider.OffsetNow;
-                _dbContext.Sys_AuthTokens.Update(token);
+                //_dbContext.Sys_AuthTokens.Update(token);
+                _dbContext.Entry(token).CurrentValues.SetValues(token);
             }
             await _dbContext.SaveChangesAsync();
         }

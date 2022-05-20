@@ -31,11 +31,11 @@ namespace Wolf.API.Controllers
         private readonly IJwtAuthManager _jwtAuthManager;
         private readonly IServiceWrapper _service;
         private readonly ILogger<Sys_AccountController> _logger;
-        public Sys_AccountController(IServiceWrapper repository, IUserProvider userService, IJwtAuthManager jwtAuthManager, ILogger<Sys_AccountController> logger)
+        public Sys_AccountController(IServiceWrapper service, IUserProvider userService, IJwtAuthManager jwtAuthManager, ILogger<Sys_AccountController> logger)
         {            
             _userProvider = userService;            
             _jwtAuthManager = jwtAuthManager;
-            _service = repository;
+            _service = service;
             _logger = logger;
         }
 
@@ -50,7 +50,7 @@ namespace Wolf.API.Controllers
                 {
                     return BadRequest();
                 }
-                if (!_userProvider.IsValidUserLogin(request.UserName, request.Password, out string message))
+                if (!UserExtensions.IsValidUserLogin(request.UserName, request.Password, out string message))
                 {
                     throw new Exception(message);                    
                 }
@@ -87,7 +87,7 @@ namespace Wolf.API.Controllers
                 {
                     return BadRequest();
                 }
-                if (!_userProvider.IsValidUserLogin(request.LoginName, request.PassWord, out string message))
+                if (!UserExtensions.IsValidUserLogin(request.LoginName, request.PassWord, out string message))
                 {
                     throw new Exception(message);
                 }
@@ -124,7 +124,7 @@ namespace Wolf.API.Controllers
                 {
                     return BadRequest();
                 }
-                if (!_userProvider.IsValidUserChangePassword(request.UserName, request.PasswordOld, request.PasswordNew, out string message))
+                if (!UserExtensions.IsValidUserChangePassword(request.UserName, request.PasswordOld, request.PasswordNew, out string message))
                 {
                     return ResponseMessage.Error(null, message);
                 }

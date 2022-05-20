@@ -27,11 +27,11 @@ namespace Wolf.API.Controllers
         private readonly IServiceWrapper _service;        
         private readonly ILogger<Sys_CategoryController> _logger;
         private readonly string _savePath;
-        public Sys_FileController(IConfiguration rootConfiguration, IServiceWrapper repository, IUploadFileProvider fileProvider, ILogger<Sys_CategoryController> logger) :base(repository, logger)
+        public Sys_FileController(IConfiguration rootConfiguration, IServiceWrapper service, IUploadFileProvider fileProvider, ILogger<Sys_CategoryController> logger) :base(service, logger)
         {
             AppSettings appSettings = new AppSettings();
             rootConfiguration.Bind(appSettings);
-            _service = repository;
+            _service = service;
             _fileProvider = fileProvider;            
             _logger = logger;            
             _savePath = appSettings.FileServerConfiguration.SavePath;

@@ -53,7 +53,12 @@ namespace Wolf.API.Service.Sys_Role
             {
                 throw new Exception(Sys_Const.Message.SERVICE_ROLE_EXIST_USER);
             }
-            _dbContext.Sys_Roles.Remove(new Model.Sys_Role() { Id = Id });
+            var role = await _dbContext.Sys_Roles.FirstOrDefaultAsync(o => o.Id == Id);
+            if(role == null)
+            {
+                throw new Exception(Sys_Const.Message.SERVICE_ROLE_UNEXISTED);
+            }    
+            _dbContext.Sys_Roles.Remove(role);
             await UnitOfWork.SaveAsync();
         }
     }

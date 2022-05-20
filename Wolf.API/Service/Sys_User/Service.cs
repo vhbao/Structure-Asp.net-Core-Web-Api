@@ -19,14 +19,12 @@ namespace Wolf.API.Service.Sys_User
     {
         private readonly DomainDbContext _dbContext;
         private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly IUserProvider _userProvider;        
-        private readonly AppSettings _appSettings = new AppSettings();
-        public Service(DomainDbContext dbContext, IDateTimeProvider dateTimeProvider, IUserProvider userService, IConfiguration configuration) :base(dbContext, dateTimeProvider, userService)
+        private readonly IUserProvider _userProvider;                
+        public Service(DomainDbContext dbContext, IDateTimeProvider dateTimeProvider, IUserProvider userService) :base(dbContext, dateTimeProvider, userService)
         {
             _dbContext = dbContext;
             _dateTimeProvider = dateTimeProvider;
-            _userProvider = userService;
-            configuration.Bind(_appSettings);
+            _userProvider = userService;            
         }
         public async Task<bool> IsDupicateAttributesAsync(Guid? Id, string LoginName)
         {
@@ -67,10 +65,14 @@ namespace Wolf.API.Service.Sys_User
             }
         }
         public async Task DeleteById(Guid Id)
-        {
-
+        {            
             _dbContext.Sys_Users_Roles.RemoveRange(_dbContext.Sys_Users_Roles.Where(o => o.UserId == Id).ToList());
-            _dbContext.Sys_Users.Remove(new Model.Sys_User() { Id = Id });
+            var user = await _dbContext.Sys_Users.FirstOrDefaultAsync(o => o.Id == Id);
+            if (user != null)
+            {
+                throw new Exception(Sys_Const.Message.SERVICE_USERNAME_UNEXISTED);
+            }
+            _dbContext.Sys_Users.Remove(user);
             await UnitOfWork.SaveAsync();
         }
         public async Task<ViewModel.Sys_User.Detail> GetDetailByIdAsync(Guid id)
@@ -141,7 +143,8 @@ namespace Wolf.API.Service.Sys_User
                 Sys_User_Role userRoles = await _dbContext.Sys_Users_Roles.FirstOrDefaultAsync(o => o.UserId == user.Id && o.IsDefault == true);
                 userRoles.OrganId = organId;
                 userRoles.RoleId = roleId;
-                _dbContext.Sys_Users_Roles.Update(userRoles);
+                //_dbContext.Sys_Users_Roles.Update(userRoles);
+                _dbContext.Entry(userRoles).CurrentValues.SetValues(userRoles);
                 //mapping
                 ViewModel.Sys_User.Detail userDetail = new ViewModel.Sys_User.Detail();
                 ObjectExtensions.Mapping<Model.Sys_User, ViewModel.Sys_User.Detail>(user, userDetail);
@@ -177,10 +180,6 @@ namespace Wolf.API.Service.Sys_User
         }
         public async Task<LoginResult> CheckUserLogin(string LoginName, string Password)
         {
-            if(_appSettings.SSOConfig.Enable)
-            {
-
-            }
             var obj = await (from a in _dbContext.Sys_Users
                              where a.LoginName == LoginName
                              select new
@@ -225,7 +224,8 @@ namespace Wolf.API.Service.Sys_User
             {
                 oUser.PassWord = Cryption.EncryptByKey(PassWord, Sys_Const.Security.key);
             }
-            _dbContext.Sys_Users.Update(oUser);
+            //_dbContext.Sys_Users.Update(oUser);
+            _dbContext.Entry(oUser).CurrentValues.SetValues(oUser);
             await UnitOfWork.SaveAsync();
         }
         public async Task<UserInfo> GetUserInfo(string UserName)

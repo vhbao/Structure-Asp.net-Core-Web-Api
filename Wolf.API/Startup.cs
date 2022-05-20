@@ -32,6 +32,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using Wolf.API.Infrastructure.Middleware;
 using Wolf.API.Infrastructure.BackgroundTasks;
+using Wolf.API.Infrastructure.Swagger;
 
 namespace Wolf.API
 {
@@ -158,6 +159,7 @@ namespace Wolf.API
                     {securityScheme, new string[] { }}
                 });
                 c.CustomSchemaIds(i => i.FullName);
+                c.SchemaFilter<SwaggerExcludeFilter>();
             });
         }
         protected virtual void ConfigureSwagger(IApplicationBuilder app)
@@ -190,9 +192,14 @@ namespace Wolf.API
         #region FileServer
         protected virtual void ConfigureFileServer(IApplicationBuilder app)
         {
+            string root = Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles");
+            if (!File.Exists(root))
+            {
+                Directory.CreateDirectory(root);
+            }
             app.UseFileServer(new FileServerOptions
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
+                FileProvider = new PhysicalFileProvider(root),
                 RequestPath = "/StaticFiles",
                 EnableDefaultFiles = true
             });

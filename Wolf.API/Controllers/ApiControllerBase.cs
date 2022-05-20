@@ -20,10 +20,10 @@ namespace Wolf.API.Controllers
     {        
         private ServiceDecorator<TEntity> _serviceDecorator;
         private readonly ILogger _logger;        
-        public ApiControllerBase(IServiceWrapper repository, ILogger logger)
+        public ApiControllerBase(IServiceWrapper service, ILogger logger)
         {            
             _logger = logger;
-            _serviceDecorator = new ServiceDecorator<TEntity>(repository);
+            _serviceDecorator = new ServiceDecorator<TEntity>(service);
         }        
         [HttpGet("{page}/{pageSize}/{totalLimitItems}")]
         [AuthorizeFilter]

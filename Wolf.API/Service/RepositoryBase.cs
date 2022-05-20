@@ -37,39 +37,39 @@ namespace Wolf.API.Service
         }
         public async Task AddOrUpdateAsync(T entity)
         {
-            if (GuidExtensions.IsNullOrEmpty(entity.Id))
+            var existingItem = await _dbContext.Set<T>().FirstOrDefaultAsync(o => o.Id == entity.Id);
+            if (existingItem != null)
+            {
+                entity.UpdatedDateTime = _dateTimeProvider.OffsetNow;
+                entity.UpdatedBy = _userProvider.LoginName;
+                _dbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+            }
+            else
             {
                 entity.Id = Guid.Empty;
                 entity.CreatedDateTime = _dateTimeProvider.OffsetNow;
                 entity.CreatedBy = _userProvider.LoginName;
-                await DbSet.AddAsync(entity);
+                await _dbContext.Set<T>().AddAsync(entity);
             }
-            else
+        }
+        public async Task<T> SaveEntityAsync(T entity)
+        {
+            var existingItem = await _dbContext.Set<T>().FirstOrDefaultAsync(o => o.Id == entity.Id);
+            if (existingItem != null)
             {
                 entity.UpdatedDateTime = _dateTimeProvider.OffsetNow;
                 entity.UpdatedBy = _userProvider.LoginName;
-                DbSet.Update(entity);
-            }
-        }
-        public async Task<T> SaveEntityAsync(T model)
-        {
-            EntityEntry<T> result;
-            var entityExisted = await _dbContext.Set<T>().AnyAsync(o => o.Id == model.Id);
-            if (entityExisted)
-            {
-                model.UpdatedDateTime = _dateTimeProvider.OffsetNow;
-                model.UpdatedBy = _userProvider.LoginName;
-                result = DbSet.Update(model);
+                _dbContext.Entry(existingItem).CurrentValues.SetValues(entity);
             }
             else
             {
-                model.Id = Guid.NewGuid();
-                model.CreatedDateTime = _dateTimeProvider.OffsetNow;
-                model.CreatedBy = _userProvider.LoginName;
-                result = await DbSet.AddAsync(model);
+                entity.Id = Guid.NewGuid();
+                entity.CreatedDateTime = _dateTimeProvider.OffsetNow;
+                entity.CreatedBy = _userProvider.LoginName;                
+                await _dbContext.Set<T>().AddAsync(entity);
             }
             await UnitOfWork.SaveAsync();
-            return result.Entity;
+            return entity;
         }
         public async Task<Paged<T>> GetPagedAsync(int page, int pageSize, int totalLimitItems, string search)
         {
@@ -88,11 +88,11 @@ namespace Wolf.API.Service
         }
         public void Delete(List<T> entity)
         {
-            DbSet.RemoveRange(entity);            
+            DbSet.RemoveRange(DbSet.Where(o => entity.Select(o => o.Id).Contains(o.Id)));            
         }
         public async Task DeleteSave(List<T> entity)
         {
-            DbSet.RemoveRange(entity);
+            DbSet.RemoveRange(DbSet.Where(o => entity.Select(o => o.Id).Contains(o.Id)));
             await UnitOfWork.SaveAsync();
         }
     }

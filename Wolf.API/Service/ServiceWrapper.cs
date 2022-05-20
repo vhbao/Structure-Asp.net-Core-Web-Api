@@ -12,8 +12,7 @@ namespace Wolf.API.Service
     {
         private readonly DomainDbContext _context;
         private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly IUserProvider _userProvider;
-        private readonly IConfiguration _configuration;
+        private readonly IUserProvider _userProvider;        
         private Sys_AuthToken.IService _sys_authtoken;
         private Sys_Category.IService _sys_category;
         private Sys_User.IService _sys_user;
@@ -27,8 +26,7 @@ namespace Wolf.API.Service
         {            
             _context = context;
             _dateTimeProvider = dateTimeProvider;
-            _userProvider = userService;
-            _configuration = configuration;
+            _userProvider = userService;            
         }
 
         public Sys_AuthToken.IService Sys_AuthToken
@@ -73,7 +71,7 @@ namespace Wolf.API.Service
             {
                 if (_sys_user == null)
                 {
-                    _sys_user = new Sys_User.Service(_context, _dateTimeProvider, _userProvider, _configuration);
+                    _sys_user = new Sys_User.Service(_context, _dateTimeProvider, _userProvider);
                 }
 
                 return _sys_user;

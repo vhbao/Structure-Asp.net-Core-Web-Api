@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wolf.API", "Wolf.API\Wolf.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wolf.Core", "Wolf.Core\Wolf.Core.csproj", "{C5508C8B-1ACD-48C9-924E-CB7026764250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wolf.UnitTest", "Wolf.UnitTest\Wolf.UnitTest.csproj", "{77277A08-64D4-4CB1-8A0C-81A0107929EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wolf.UnitTest", "Wolf.UnitTest\Wolf.UnitTest.csproj", "{77277A08-64D4-4CB1-8A0C-81A0107929EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
