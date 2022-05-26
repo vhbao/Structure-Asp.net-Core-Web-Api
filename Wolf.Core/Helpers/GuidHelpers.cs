@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class GuidExtensions
+    public static class GuidHelpers
     {
         public static bool IsNullOrEmpty(this Guid? guid)
         {

@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Text;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class TypeExtensions
+    public static class TypeHelpers
     {
         public static bool HasInterface(this Type type, Type interfaceType)
         {

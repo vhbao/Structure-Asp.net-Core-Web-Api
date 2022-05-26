@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class HttpClientExtensions
+    public static class HttpClientHelpers
     {
         public static void UseBasicAuthentication(this HttpClient client, string userName, string password)
         {

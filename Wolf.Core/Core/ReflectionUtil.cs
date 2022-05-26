@@ -10,6 +10,31 @@ namespace Wolf.Core.Core
 {
     public class ReflectionUtil
     {
+        public static List<string> GetColumnNameAttr<T>(string columnCondition)
+        {
+            List<string> _list = new List<string>();
+
+            PropertyInfo[] props = typeof(T).GetProperties();
+            foreach (PropertyInfo prop in props)
+            {
+                object[] attrs = prop.GetCustomAttributes(true);
+                foreach (object attr in attrs)
+                {
+                    ColumnNameAttr columnNameAttr = attr as ColumnNameAttr;
+                    if (columnNameAttr != null)
+                    {
+                        string propName = prop.Name;
+                        string column = columnNameAttr.Column;
+                        if(string.IsNullOrEmpty(columnCondition))
+                            _list.Add(propName);
+                        else if(column == columnCondition)
+                            _list.Add(propName);
+                    }
+                }
+            }
+
+            return _list;
+        }
         public static IEnumerable<string> GetControllers()
         {
             Assembly asm = Assembly.GetExecutingAssembly();

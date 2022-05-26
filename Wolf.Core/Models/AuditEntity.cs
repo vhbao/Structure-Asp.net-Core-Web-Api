@@ -6,12 +6,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Wolf.Core.Core;
 
 namespace Wolf.Core.Models
 {
     abstract public class AuditEntity
     {
         [Key]
+        [ColumnNameAttr("category")]
         public Guid Id { get; set; }
 
         [JsonIgnore]

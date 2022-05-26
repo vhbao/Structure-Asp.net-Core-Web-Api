@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class IEnumerableExtensions
+    public static class IEnumerableHelpers
     {
         public static IEnumerable<T> Paged<T>(this IEnumerable<T> source, int page, int pageSize, int totalLimitItems)
         {

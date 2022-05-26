@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class HttpContentExtensions
+    public static class HttpContentHelpers
     {
         public static async Task<T> ReadAs<T>(this HttpContent httpContent)
         {

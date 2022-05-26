@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Wolf.API.Infrastructure;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Interfaces;
 using Wolf.Core.Models;
 using System;
@@ -48,7 +48,7 @@ namespace Wolf.API.Service.Sys_File
             await _dbContext.Sys_Files.AddRangeAsync(saveFiles);
             await UnitOfWork.SaveAsync();
             List<FileResult> filesresult = new List<FileResult>();            
-            ObjectExtensions.Mapping<Model.Sys_File, FileResult>(saveFiles, filesresult);
+            ObjectHelpers.Mapping<Model.Sys_File, FileResult>(saveFiles, filesresult);
             return filesresult;
         }
         public async Task<List<FileResult>> GetByObjectId(string objectId, string objectType)
@@ -59,7 +59,7 @@ namespace Wolf.API.Service.Sys_File
             foreach (var file in files)
             {
                 fileResult = new FileResult();
-                ObjectExtensions.Mapping<Model.Sys_File, FileResult>(file, fileResult);
+                ObjectHelpers.Mapping<Model.Sys_File, FileResult>(file, fileResult);
                 fileResults.Add(fileResult);
             }
             return fileResults;

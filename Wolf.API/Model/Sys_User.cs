@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Wolf.Core.Core;
 
 namespace Wolf.API.Model
 {
@@ -13,8 +14,10 @@ namespace Wolf.API.Model
     public class Sys_User: AuditEntity
     {
         [StringLength(55)]
+        [ColumnNameAttr("category")]
         public string FullName { get; set; }
         [StringLength(55)]
+        [ColumnNameAttr("category")]
         public string LoginName { get; set; }
         [StringLength(55)]
         public string PassWord { get; set; }

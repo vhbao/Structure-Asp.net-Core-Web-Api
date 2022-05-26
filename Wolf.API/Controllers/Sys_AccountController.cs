@@ -13,7 +13,7 @@ using Wolf.API.Service;
 using Wolf.Core.Models;
 using Wolf.Core.Constant;
 using System.Security.Claims;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Core;
 using Microsoft.Extensions.Configuration;
 using Wolf.API.Infrastructure.Authorization;
@@ -50,7 +50,7 @@ namespace Wolf.API.Controllers
                 {
                     return BadRequest();
                 }
-                if (!UserExtensions.IsValidUserLogin(request.UserName, request.Password, out string message))
+                if (!UserHelpers.IsValidUserLogin(request.UserName, request.Password, out string message))
                 {
                     throw new Exception(message);                    
                 }
@@ -87,7 +87,7 @@ namespace Wolf.API.Controllers
                 {
                     return BadRequest();
                 }
-                if (!UserExtensions.IsValidUserLogin(request.LoginName, request.PassWord, out string message))
+                if (!UserHelpers.IsValidUserLogin(request.LoginName, request.PassWord, out string message))
                 {
                     throw new Exception(message);
                 }
@@ -97,7 +97,7 @@ namespace Wolf.API.Controllers
                     throw new Exception(Sys_Const.Message.SERVICE_USERNAME_EXISTED);
                 }
                 Sys_User userNew = new Sys_User();
-                ObjectExtensions.Mapping<SignupRequest, Sys_User>(request, userNew);
+                ObjectHelpers.Mapping<SignupRequest, Sys_User>(request, userNew);
                 userNew.PassWord = Cryption.EncryptByKey(userNew.PassWord, Sys_Const.Security.key);
                 if (userNew.LoginName == "admin") { 
                     userNew.IsActive = true; 
@@ -124,7 +124,7 @@ namespace Wolf.API.Controllers
                 {
                     return BadRequest();
                 }
-                if (!UserExtensions.IsValidUserChangePassword(request.UserName, request.PasswordOld, request.PasswordNew, out string message))
+                if (!UserHelpers.IsValidUserChangePassword(request.UserName, request.PasswordOld, request.PasswordNew, out string message))
                 {
                     return ResponseMessage.Error(null, message);
                 }

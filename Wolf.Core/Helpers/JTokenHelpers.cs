@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class JTokenExtensions
+    public static class JTokenHelpers
     {
         public static string ToString(JToken token)
         {

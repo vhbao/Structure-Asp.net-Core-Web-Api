@@ -5,9 +5,9 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class ObjectExtensions
+    public static class ObjectHelpers
     {
         public static string AsJsonString(this object obj)
         {

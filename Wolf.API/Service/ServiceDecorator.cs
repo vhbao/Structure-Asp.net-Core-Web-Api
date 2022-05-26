@@ -56,6 +56,10 @@ namespace Wolf.API.Service
         {
             return await _serviceBase.GetPagedAsync(page, pageSize, totalLimitItems, search);
         }
+        public List<TEntity> GetCategories()
+        {
+            return _serviceBase.GetCategories();
+        }
         public async Task<TEntity> GetByIdAsync(Guid id)
         {
             return await _serviceBase.GetByIdAsync(id);

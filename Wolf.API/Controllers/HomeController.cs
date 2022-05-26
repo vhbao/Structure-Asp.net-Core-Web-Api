@@ -9,6 +9,7 @@ namespace Wolf.API.Controllers
         [HttpGet("/")]
         public IActionResult Index()
         {
+            
             return new RedirectResult("~/swagger");
         }
     }

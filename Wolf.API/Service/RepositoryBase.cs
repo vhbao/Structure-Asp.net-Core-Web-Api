@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Wolf.API.Infrastructure;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Interfaces;
 using Wolf.Core.Models;
 using System;
@@ -11,6 +11,7 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Wolf.Core.Core;
 
 namespace Wolf.API.Service
 {
@@ -94,6 +95,15 @@ namespace Wolf.API.Service
         {
             DbSet.RemoveRange(DbSet.Where(o => entity.Select(o => o.Id).Contains(o.Id)));
             await UnitOfWork.SaveAsync();
+        }
+        public List<T> GetCategories()
+        {
+            List<string> columnNames = ReflectionUtil.GetColumnNameAttr<T>("category");
+            if (columnNames.Count == 0)
+                return null;
+            string strColumns = ListHelpers.ConcatStrings(columnNames);
+            var result = _dbContext.Set<T>().Select(LinQHelpers.DynamicSelectGenerator<T>(strColumns)).ToList();
+            return result;
         }
     }
 }

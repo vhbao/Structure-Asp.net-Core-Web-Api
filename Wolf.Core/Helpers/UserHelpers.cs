@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Wolf.Core.Constant;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class UserExtensions
+    public static class UserHelpers
     {
         public static bool IsValidUserLogin(string userName, string password, out string message)
         {

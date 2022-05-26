@@ -18,5 +18,6 @@ namespace Wolf.Core.Interfaces
         Task<TEntity> GetByIdAsync(Guid id);
         Task DeleteSave(List<TEntity> entity);
         void Delete(List<TEntity> entity);
+        List<TEntity> GetCategories();
     }
 }

@@ -3,9 +3,9 @@ using System.Net.Mail;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class RegularExtensions
+    public static class RegularHelpers
     {
         public static bool IsValidEmail(this string email)
         {

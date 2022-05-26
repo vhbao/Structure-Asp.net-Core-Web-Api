@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class ListExtensions
+    public static class ListHelpers
     {
         public static List<T> Combines<T>(this List<T> collection1, List<T> collection2)
         {
@@ -18,6 +18,15 @@ namespace Wolf.Core.ExtensionMethods
             list.AddRange(collection1);
             list.AddRange(collection2);
             return list;
+        }
+        public static string ConcatStrings(List<string> items)
+        {
+            string result = string.Empty;
+            if(items != null && items.Count > 0)
+            {
+                result = string.Join(",", items);
+            }                
+            return result;
         }
     }
 }

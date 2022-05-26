@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System.Reflection;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
     /// <summary>
     /// https://stackoverflow.com/questions/78536/deep-cloning-objects
     /// </summary>
-    public static class CloningExtensions
+    public static class CloningHelpers
     {
         public static T ShallowClone<T>(this T source)
         {

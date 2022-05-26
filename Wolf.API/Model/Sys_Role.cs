@@ -1,11 +1,9 @@
-﻿using Wolf.Core.Enums;
-using Wolf.Core.Models;
+﻿using Wolf.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+using Wolf.Core.Core;
 
 namespace Wolf.API.Model
 {
@@ -13,8 +11,10 @@ namespace Wolf.API.Model
     public class Sys_Role : AuditEntity
     {
         [StringLength(55)]
+        [ColumnNameAttr("category")]
         public string Code { get; set; }
         [StringLength(55)]
+        [ColumnNameAttr("category")]
         public string Name { get; set; }      
     }
 }

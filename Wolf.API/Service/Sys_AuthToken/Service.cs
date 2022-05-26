@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wolf.API.Infrastructure;
 using Wolf.Core.Constant;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace Wolf.API.Service.Sys_AuthToken
             }
             else
             {
-                ObjectExtensions.Mapping<Model.Sys_AuthToken, Model.Sys_AuthToken>(authToken, token, new string[] { "id" });
+                ObjectHelpers.Mapping<Model.Sys_AuthToken, Model.Sys_AuthToken>(authToken, token, new string[] { "id" });
                 token.LoginName = loginName;
                 token.UpdatedBy = loginName;
                 token.UpdatedDateTime = _dateTimeProvider.OffsetNow;

@@ -5,7 +5,7 @@ using Wolf.API.Infrastructure;
 using Wolf.API.Model;
 using Wolf.Core.Constant;
 using Wolf.Core.Core;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Interfaces;
 using Wolf.Core.Models;
 using System;
@@ -33,7 +33,7 @@ namespace Wolf.API.Service.Sys_User
             {
                 throw new Exception(Sys_Const.Message.SERVICE_CODE_NOT_EMPTY);
             }
-            if (GuidExtensions.IsNullOrEmpty(Id))
+            if (GuidHelpers.IsNullOrEmpty(Id))
             {
                 result = await _dbContext.Sys_Users.Where(o => o.LoginName == LoginName).AnyAsync();
             }
@@ -113,7 +113,7 @@ namespace Wolf.API.Service.Sys_User
                 await _dbContext.Sys_Users_Roles.AddAsync(userRoles);
                 //mapping
                 ViewModel.Sys_User.Detail userDetail = new ViewModel.Sys_User.Detail();
-                ObjectExtensions.Mapping<Model.Sys_User, ViewModel.Sys_User.Detail>(user, userDetail);
+                ObjectHelpers.Mapping<Model.Sys_User, ViewModel.Sys_User.Detail>(user, userDetail);
                 userDetail.OrganId = userRoles.OrganId;
                 userDetail.RoleId = userRoles.RoleId;
                 await UnitOfWork.SaveAsync();
@@ -147,7 +147,7 @@ namespace Wolf.API.Service.Sys_User
                 _dbContext.Entry(userRoles).CurrentValues.SetValues(userRoles);
                 //mapping
                 ViewModel.Sys_User.Detail userDetail = new ViewModel.Sys_User.Detail();
-                ObjectExtensions.Mapping<Model.Sys_User, ViewModel.Sys_User.Detail>(user, userDetail);
+                ObjectHelpers.Mapping<Model.Sys_User, ViewModel.Sys_User.Detail>(user, userDetail);
                 userDetail.OrganId = userRoles.OrganId;
                 userDetail.RoleId = userRoles.RoleId;
                 await UnitOfWork.SaveAsync();
@@ -232,7 +232,7 @@ namespace Wolf.API.Service.Sys_User
         {
             UserInfo userInfo = new UserInfo();   
             var userCurrent = await _dbContext.Sys_Users.FirstOrDefaultAsync(o => o.LoginName == UserName);
-            ObjectExtensions.Mapping<Model.Sys_User, UserInfo>(userCurrent, userInfo);
+            ObjectHelpers.Mapping<Model.Sys_User, UserInfo>(userCurrent, userInfo);
             if (userCurrent != null)
             {
                 userInfo.Roles = new List<string>();

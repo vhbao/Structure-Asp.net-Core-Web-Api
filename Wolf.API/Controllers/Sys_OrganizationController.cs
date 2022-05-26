@@ -22,19 +22,19 @@ namespace Wolf.API.Controllers
             _logger = logger;
             _service = service;
         }
-        [HttpGet("CheckDupicateAttributes")]
+        [HttpGet("CheckDuplicateAttributes")]
         [AuthorizeFilter]
-        public async Task<IActionResult> CheckDupicateAttributes(Guid? id, string code)
+        public async Task<IActionResult> CheckDuplicateAttributes(Guid? id, string code)
         {
             try
             {
-                _logger.LogInformation(string.Format("Call CheckDupicateAttributes params: (id = {0}, code = {1})", id, code));
+                _logger.LogInformation(string.Format("Call CheckDuplicateAttributes params: (id = {0}, code = {1})", id, code));
                 var result = await _service.Sys_Organization.IsDupicateAttributesAsync(id, code);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(string.Format("CheckDupicateAttributes : {0}", ex.Message));
+                _logger.LogError(string.Format("CheckDuplicateAttributes : {0}", ex.Message));
                 return ResponseMessage.Error(ex.Message);
             }
         }

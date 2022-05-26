@@ -2,7 +2,7 @@
 using Wolf.API.Infrastructure;
 using Wolf.Core.Constant;
 using Wolf.Core.Core;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Interfaces;
 using Wolf.Core.Models;
 using System;
@@ -27,7 +27,7 @@ namespace Wolf.API.Service.Sys_Organization
         {
             List<ViewModel.Sys_Organization.OrganTree> items = await _dbContext.Sys_Organizations.Select(o =>
                 new ViewModel.Sys_Organization.OrganTree() { Id = o.Id.ToString(), Code = o.Code, Name = o.Name, ParentId = o.ParentId.ToString() }).ToListAsync();
-            List<ViewModel.Sys_Organization.OrganTree> trees = TreeMultiLevel<ViewModel.Sys_Organization.OrganTree>.ListToTree(items);
+            List<ViewModel.Sys_Organization.OrganTree> trees = TreeHelpers<ViewModel.Sys_Organization.OrganTree>.ListToTrees(items);
             return trees;
         }
         public async Task<List<Model.Sys_Organization>> GetByParentIdAsync(Guid ParentId)
@@ -42,7 +42,7 @@ namespace Wolf.API.Service.Sys_Organization
             {
                 throw new Exception(Sys_Const.Message.SERVICE_CODE_NOT_EMPTY);
             }
-            if (GuidExtensions.IsNullOrEmpty(Id))
+            if (GuidHelpers.IsNullOrEmpty(Id))
             {
                 result = await _dbContext.Sys_Organizations.Where(o => o.Code == Code).AnyAsync();
             }

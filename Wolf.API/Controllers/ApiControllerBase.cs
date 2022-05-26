@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Wolf.API.Infrastructure.Authorization;
 using Wolf.API.Service;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,25 @@ namespace Wolf.API.Controllers
                 _logger.LogError(string.Format("GetListPaged : {0}", ex.Message));
                 return ResponseMessage.Error(ex.Message);
             }
-        }        
+        }
+
+        [HttpGet("Categories")]
+        [AuthorizeFilter]
+        public virtual IActionResult GetCategories()
+        {
+            try
+            {
+                _logger.LogInformation("Call GetCategories");
+                var items = _serviceDecorator.GetCategories();
+                return ResponseMessage.Success(items);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(string.Format("GetCategories : {0}", ex.Message));
+                return ResponseMessage.Error(ex.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         [AuthorizeFilter]
         public virtual async Task<IActionResult> GetById(Guid id)

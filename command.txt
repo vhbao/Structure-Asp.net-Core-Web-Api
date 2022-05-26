@@ -1,4 +1,4 @@
-add-migration InitDB -o DAL/migrations
+add-migration InitDB -o Infrastructure/migrations
 update-database
 
 dotnet ef dbcontext scaffold "Data Source=DESKTOP-79E5E7Q\SQLEXPRESS;Initial Catalog= QLSTC;Integrated Security=false;User Id=sa;password=xyz@1234;Pooling=true;Max Pool Size=10000;Connection Timeout=100;" Microsoft.EntityFrameworkCore.SqlServer -o Models -c DomainDbContext -f

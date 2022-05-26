@@ -5,10 +5,39 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class StringExtensions
+    public static class StringHelpers
     {
+        public static string TruncateWord(this string value, int wordLimit)
+        {
+            if (value == null || value.Length < wordLimit || value.IndexOf(" ", wordLimit) == -1)
+                return value;
+
+            return value.Substring(0, value.IndexOf(" ", wordLimit));
+        }
+        public static string TruncateString(this string value, int charLimit)
+        {
+            if (value.Length <= charLimit)
+                return value;
+            if (value.Length > charLimit)
+            {
+                value = value.Substring(0, charLimit);
+                int iSplitIndex = value.LastIndexOf(' ');
+                if (iSplitIndex != -1)
+                    value = value.Substring(0, iSplitIndex) + "...";
+            }
+            return value;
+        }
+        public static string RemoveSign4VietnameseString(this string str)
+        {
+            for (int i = 1; i < VietnameseSigns.Length; i++)
+            {
+                for (int j = 0; j < VietnameseSigns[i].Length; j++)
+                    str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
+            }
+            return str;
+        }
         public static T AsObject<T>(this string str)
         {            
             var obj = JsonConvert.DeserializeObject<T>(str);
@@ -92,5 +121,38 @@ namespace Wolf.Core.ExtensionMethods
         {
             return containsKeywords.Any(keyword => input.IndexOf(keyword, comparisonType) >= 0);
         }
+        private static readonly string[] VietnameseSigns = new string[]
+        {
+
+            "aAeEoOuUiIdDyY",
+
+            "áàạảãâấầậẩẫăắằặẳẵ",
+
+            "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+
+            "éèẹẻẽêếềệểễ",
+
+            "ÉÈẸẺẼÊẾỀỆỂỄ",
+
+            "óòọỏõôốồộổỗơớờợởỡ",
+
+            "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+
+            "úùụủũưứừựửữ",
+
+            "ÚÙỤỦŨƯỨỪỰỬỮ",
+
+            "íìịỉĩ",
+
+            "ÍÌỊỈĨ",
+
+            "đ",
+
+            "Đ",
+
+            "ýỳỵỷỹ",
+
+            "ÝỲỴỶỸ"
+        };
     }
 }

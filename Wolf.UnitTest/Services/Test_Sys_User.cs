@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Wolf.API.Model;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Constant;
 
 namespace Wolf.UnitTest.Services
@@ -219,7 +219,7 @@ namespace Wolf.UnitTest.Services
             {
                 Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
                 ParentId = Guid.Empty,
-                Type = Core.Enums.OrganizationType.Organization,
+                Type = Wolf.Core.Enums.OrganizationType.Organization,
                 Code = "organ",
                 Name = "organ",
                 CreatedDateTime = _dateTimeProvider.Object.OffsetNow,

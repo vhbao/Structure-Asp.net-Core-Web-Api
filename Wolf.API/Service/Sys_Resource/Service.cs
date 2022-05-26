@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Wolf.Core.Helpers;
 
 namespace Wolf.API.Service.Sys_Resource
 {
@@ -26,14 +27,14 @@ namespace Wolf.API.Service.Sys_Resource
         {
             List<ViewModel.Sys_Resource.ResourceTree> items = await _dbContext.Sys_Resources.Where(o => o.Type == Core.Enums.ResourceType.Menu || o.Type == Core.Enums.ResourceType.SubMenu).Select(o =>
                 new ViewModel.Sys_Resource.ResourceTree() { Id = o.Id.ToString(), Code = o.Code, Name = o.Name, ParentId = o.ParentId.ToString() }).ToListAsync();
-            List<ViewModel.Sys_Resource.ResourceTree> trees = TreeMultiLevel<ViewModel.Sys_Resource.ResourceTree>.ListToTree(items);
+            List<ViewModel.Sys_Resource.ResourceTree> trees = TreeHelpers<ViewModel.Sys_Resource.ResourceTree>.ListToTrees(items);
             return trees;
         }
         public async Task<List<ViewModel.Sys_Resource.ResourceTree>> GetFunctionTreeAsync()
         {
             List<ViewModel.Sys_Resource.ResourceTree> items = await _dbContext.Sys_Resources.Where(o => o.Type == Core.Enums.ResourceType.Function).Select(o =>
                 new ViewModel.Sys_Resource.ResourceTree() { Id = o.Id.ToString(), Code = o.Code, Name = o.Name, ParentId = o.ParentId.ToString() }).ToListAsync();
-            List<ViewModel.Sys_Resource.ResourceTree> trees = TreeMultiLevel<ViewModel.Sys_Resource.ResourceTree>.ListToTree(items);
+            List<ViewModel.Sys_Resource.ResourceTree> trees = TreeHelpers<ViewModel.Sys_Resource.ResourceTree>.ListToTrees(items);
             return trees;
         }
         public async Task<List<Model.Sys_Resource>> InitFunctionAsync()

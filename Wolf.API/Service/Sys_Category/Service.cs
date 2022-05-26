@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wolf.API.Infrastructure;
 using Wolf.Core.Constant;
-using Wolf.Core.ExtensionMethods;
+using Wolf.Core.Helpers;
 using Wolf.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace Wolf.API.Service.Sys_Category
             {
                 throw new Exception(Sys_Const.Message.SERVICE_CODE_NOT_EMPTY);
             }
-            if (GuidExtensions.IsNullOrEmpty(Id))
+            if (GuidHelpers.IsNullOrEmpty(Id))
             {
                 result = await _dbContext.Sys_Categories.Where(o => o.Code == Code && o.Type == (Core.Enums.CategoryType)Type).AnyAsync();
             }

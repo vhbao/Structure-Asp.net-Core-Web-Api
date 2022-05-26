@@ -8,9 +8,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wolf.Core.ExtensionMethods
+namespace Wolf.Core.Helpers
 {
-    public static class EnumerationExtensions 
+    public static class EnumerationHelpers 
     {        
 		public static List<Category> ToList<T>() where T : struct, IConvertible
 		{
